@@ -35,10 +35,10 @@ func fill(arr []int, val int) {
 
 // MinCostMatching computes Min cost bipartite matching. Negate costs for max cost.
 // Return explanation:
-// - L[i] is the index of the matched node for i-th node in the left set, i.e node i in the left will be matched to node L[i] from the right.
-// - R[i] is the index of the matched node for i-th node in the right set, i.e node R[i] in the left will be matched to node i from the right.
+// - L[i] is the index of the matched node for i-th node in the row, i.e node i from the row will be matched to node L[i] from the column.
+// - R[i] is the index of the matched node for i-th node in the column, i.e node R[i] from the row will be matched to node i from the column.
 // - ans is the cost of the matching.
-func MinCostMatching(cost [][]float64) (float64, []int, []int) {
+func MinCostMatching(cost [][]float64) (value float64, L []int, R []int) {
 	n := len(cost)
 	mated := 0
 	dist := make([]float64, n)
@@ -62,8 +62,8 @@ func MinCostMatching(cost [][]float64) (float64, []int, []int) {
 	}
 
 	/// find primal solution satisfying complementary slackness
-	L := vi(n, -1)
-	R := vi(n, -1)
+	L = vi(n, -1)
+	R = vi(n, -1)
 
 	for i := 0; i < n; i++ {
 		for j := 0; j < n; j++ {
@@ -143,7 +143,7 @@ func MinCostMatching(cost [][]float64) (float64, []int, []int) {
 		L[s] = j
 	}
 
-	value := float64(0)
+	value = float64(0)
 	for i := 0; i < n; i++ {
 		value += cost[i][L[i]]
 	}
